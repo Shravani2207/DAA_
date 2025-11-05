@@ -28,8 +28,7 @@ else:
     fib_iter = non_recursive_fibo(n)
     for num in fib_iter:
         print(num, end=" ")
-
-
+-------------------------------------------------------------------------
 
 
 Time & Space Complexity Analysis
@@ -39,7 +38,7 @@ Space Complexity: O(n) due to recursion stack
 Non-Recursive Fibonacci:
 Time Complexity: O(n)
 Space Complexity: O(1)
-
+-----------------------------------------
 # Recursive Fibonacci Function
 def recursive_fibo(n):
 if n in (0, 1):
@@ -72,7 +71,8 @@ print("\n\nFibonacci Sequence using Non-Recursion:")
 fib_iter = non_recursive_fibo(n)
 for num in fib_iter:
 print(num, end=" ")
-________________________________________
+------------------------------------------------------------------------------
+
 
 
 Line-by-Line Explanation
@@ -158,7 +158,7 @@ Loops through the list and prints each Fibonacci number with a space.
 Method	Time Complexity	Space Complexity	Notes
 Recursive	O(2ⁿ)	O(n)	Many repeated function calls
 Non-Recursive	O(n)	O(1)	Uses a simple loop, faster and memory-efficient
-________________________________________
+-----------------------------------------------------------------------------------------
 
 
 
@@ -366,6 +366,8 @@ A technique that solves problems by breaking them into overlapping subproblems a
 How does memoization help?
 It caches previously computed results, reducing time complexity from O(2^n) to O(n).
 ________________________________________
+
+
 Code With Recursion : 
 def recursive_fibo(n): 
 if n in (0,1): 
