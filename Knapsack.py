@@ -33,6 +33,9 @@ if __name__ == "__main__":
     print("Fractions of items taken =", fractions_taken)
 
 
+
+
+
  Line-by-Line Explanation
 # Fractional Knapsack using Greedy Method 
 def fractional_knapsack(values, weights, capacity):
@@ -82,6 +85,11 @@ Final Output:
 Max value = 240
 Fractions taken = [1, 1, 0.6666]
 ________________________________________ 
+
+
+
+
+
 Questions
 Q1: What is the Fractional Knapsack problem?
 Ans: It maximizes profit by taking whole or fractional parts of items based on value/weight ratio.
