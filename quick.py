@@ -57,7 +57,6 @@ import time
 import random — imports Python’s random module (used to pick a random pivot in randomized quicksort).
 import time — imports the time module (used to measure elapsed time for each sort).
 # ------------------ Deterministic Quick Sort ------------------
-Comment separating the deterministic quicksort section.
 def deterministic_partition(arr, low, high):
 Defines the function deterministic_partition which takes:
 arr — the list to be partitioned,
@@ -82,9 +81,9 @@ Return the pivot index (i + 1) so the caller can recurse on the two subarrays.
 def deterministic_quick_sort(arr, low, high):
 Define the full deterministic quicksort recursive function.
 if low < high:
-Base check: there are at least two elements to sort. If low >= high, subarray has 0 or 1 element and is already sorted.
+#If the sub-array has more than one element, continue sorting
 pi = deterministic_partition(arr, low, high)
-Partition the subarray and get pivot index pi.
+#Partition the array around a pivot; pi = position of pivot after partition
 deterministic_quick_sort(arr, low, pi - 1)
 deterministic_quick_sort(arr, pi + 1, high)
 Recursively sort left subarray (low to pi-1) and right subarray (pi+1 to high).
@@ -92,22 +91,30 @@ Recursively sort left subarray (low to pi-1) and right subarray (pi+1 to high).
 # ------------------ Randomized Quick Sort ------------------
 Comment separating randomized quicksort section.
 def randomized_partition(arr, low, high):
-Define partition function for randomized quicksort.
+This function selects a random pivot and partitions the array.
 random_pivot = random.randint(low, high)       # Pick random pivot
-Choose a random index between low and high (inclusive). This randomness helps avoid worst-case inputs designed for deterministic pivot choices.
+Choose a random index between low and high (inclusive). 
+This randomness helps avoid worst-case inputs designed for deterministic pivot choices.
 arr[high], arr[random_pivot] = arr[random_pivot], arr[high]  # Swap with last element
 Swap the randomly chosen pivot element into position high so we can reuse the same partition logic as deterministic_partition.
-return deterministic_partition(arr, low, high) # Partition normally
-Call the deterministic partition (which expects the pivot at high) and return its pivot index.
+return deterministic_partition(arr, low, high) 
+#Now call the normal partition function
+It arranges elements so:
+Smaller than pivot → left
+Pivot → correct position
+Bigger than pivot → right
 
 def randomized_quick_sort(arr, low, high):
 Define randomized quicksort recursive function.
 if low < high:
-Base check as before.
+#Check if array segment has more than 1 element.
+#If only one element → already sorted → stop.
 pi = randomized_partition(arr, low, high)
+#pi = final pivot position after partitioning
 randomized_quick_sort(arr, low, pi - 1)
+#Recursively sort left side (before pivot)
 randomized_quick_sort(arr, pi + 1, high)
-Partition using random pivot and recursively sort left and right partitions.
+#Recursively sort right side (after pivot)
 
 # ------------------ Main Program ------------------
 Separator comment for the main execution block.
@@ -116,7 +123,8 @@ Standard Python idiom: execute the following only when the script is run directl
 size = int(input("Enter number of elements: "))
 Read number of elements from user and convert to int.
 arr = [random.randint(1, 1000) for _ in range(size)]
-Create a list arr of length size with random integers between 1 and 1000 (inclusive). The list is random so timing comparisons are meaningful.
+Create a list arr of length size with random integers between 1 and 1000 (inclusive). 
+The list is random so timing comparisons are meaningful.
 arr1 = arr.copy()
 arr2 = arr.copy()
 Create two independent copies so both sorts operate on the exact same initial data for fair timing comparison.
@@ -126,7 +134,8 @@ Print the generated original array for reference.
 start = time.time()
 deterministic_quick_sort(arr1, 0, len(arr1) - 1)
 end = time.time()
-Record start time, run deterministic quicksort on arr1, then record end time. time.time() returns current time in seconds (floating point).
+Record start time, run deterministic quicksort on arr1, then record end time.
+time.time() returns current time in seconds (floating point).
 print("\nSorted Array (Deterministic):", arr1)
 print("Time taken (Deterministic): {:.6f} seconds".format(end - start))
 Print sorted arr1 and the time difference end - start formatted to 6 decimal places.
@@ -153,13 +162,15 @@ Practical note: For very small subarrays, implementations often switch to insert
 Seeding randomness: For reproducible timing comparisons you might seed the RNG with random.seed(some_value) before creating arr. 
 But for comparisons between algorithms, identical initial arrays already ensure fairness.
 -------------------------------------------------------------------------------------------------------------------------
+
+              
 Questions
 What is Quick Sort?
-Quick Sort is a divide-and-conquer sorting algorithm that picks a pivot, partitions the array around the pivot, and recursively sorts the left and right parts.
-              It is efficient and works in-place
+Quick Sort is a divide-and-conquer sorting algorithm that picks a pivot, partitions the array around the pivot, 
+and recursively sorts the left and right parts.
 What is the pivot element
 The pivot is the element used to divide the array into two parts — one with values smaller or equal to the pivot and 
-              the other with values greater than the pivot.
+the other with values greater than the pivot.
 Difference between Deterministic and Randomized Quick Sort?
 Deterministic Quick Sort	Randomized Quick Sort
 Pivot chosen fixed (last element)	Pivot chosen randomly
