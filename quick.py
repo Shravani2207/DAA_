@@ -2,59 +2,63 @@ import random
 import time
 # ------------------ Deterministic Quick Sort ------------------
 def deterministic_partition(arr, low, high):
-pivot = arr[high]              # Choose last element as pivot
-i = low - 1                    # Index of smaller element
-for j in range(low, high):
-if arr[j] <= pivot:        # If current element is smaller than pivot
-i += 1
-arr[i], arr[j] = arr[j], arr[i]  # Swap
+    pivot = arr[high]              # Choose last element as pivot
+    i = low - 1                    # Index of smaller element
+    for j in range(low, high):
+        if arr[j] <= pivot:        # If current element is smaller than pivot
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]  # Swap
 
-arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Place pivot correctly
-return i + 1
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Place pivot correctly
+    return i + 1
 def deterministic_quick_sort(arr, low, high):
-if low < high:
-pi = deterministic_partition(arr, low, high)
-deterministic_quick_sort(arr, low, pi - 1)
-deterministic_quick_sort(arr, pi + 1, high)
+    if low < high:
+        pi = deterministic_partition(arr, low, high)
+        deterministic_quick_sort(arr, low, pi - 1)
+        deterministic_quick_sort(arr, pi + 1, high)
 # ------------------ Randomized Quick Sort ------------------
 def randomized_partition(arr, low, high):
-random_pivot = random.randint(low, high)       # Pick random pivot
-arr[high], arr[random_pivot] = arr[random_pivot], arr[high]  # Swap with last element
-return deterministic_partition(arr, low, high) # Partition normally
+    random_pivot = random.randint(low, high)       # Pick random pivot
+    arr[high], arr[random_pivot] = arr[random_pivot], arr[high]  # Swap with last element
+    return deterministic_partition(arr, low, high) # Partition normally
 
 def randomized_quick_sort(arr, low, high):
-if low < high:
-pi = randomized_partition(arr, low, high)
-randomized_quick_sort(arr, low, pi - 1)
-randomized_quick_sort(arr, pi + 1, high)
+    if low < high:
+        pi = randomized_partition(arr, low, high)
+        randomized_quick_sort(arr, low, pi - 1)
+        randomized_quick_sort(arr, pi + 1, high)
 # ------------------ Main Program ------------------
 if __name__ == "__main__":
-size = int(input("Enter number of elements: "))
-# Random array
-arr = [random.randint(1, 1000) for _ in range(size)]
-# Copies for both quicksort versions
-arr1 = arr.copy()
-arr2 = arr.copy()
-print("\nOriginal Array:", arr)
-# Deterministic Quick Sort
-start = time.time()
-deterministic_quick_sort(arr1, 0, len(arr1) - 1)
-end = time.time()
-print("\nSorted Array (Deterministic):", arr1)
-print("Time taken (Deterministic): {:.6f} seconds".format(end - start))
-# Randomized Quick Sort
-start = time.time()
-randomized_quick_sort(arr2, 0, len(arr2) - 1)
-end = time.time()
-print("\nSorted Array (Randomized):", arr2)
-print("Time taken (Randomized): {:.6f} seconds".format(end - start))
+    size = int(input("Enter number of elements: "))
+    # Random array
+    arr = [random.randint(1, 1000) for _ in range(size)]
+    # Copies for both quicksort versions
+    arr1 = arr.copy()
+    arr2 = arr.copy()
+    print("\nOriginal Array:", arr)
+    # Deterministic Quick Sort
+    start = time.time()
+    deterministic_quick_sort(arr1, 0, len(arr1) - 1)
+    end = time.time()
+    print("\nSorted Array (Deterministic):", arr1)
+    print("Time taken (Deterministic): {:.6f} seconds".format(end - start))
+    # Randomized Quick Sort
+    start = time.time()
+    randomized_quick_sort(arr2, 0, len(arr2) - 1)
+    end = time.time()
+    print("\nSorted Array (Randomized):", arr2)
+    print("Time taken (Randomized): {:.6f} seconds".format(end - start))
+--------------------------------------------------------------------------------
+
+
+
+
 
 
 import random
 import time
 import random — imports Python’s random module (used to pick a random pivot in randomized quicksort).
 import time — imports the time module (used to measure elapsed time for each sort).
-________________________________________
 # ------------------ Deterministic Quick Sort ------------------
 Comment separating the deterministic quicksort section.
 def deterministic_partition(arr, low, high):
