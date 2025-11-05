@@ -99,8 +99,6 @@ Fractions taken = [1, 1, 0.6666]
 
 
 
-
-
 Questions
 Q1: What is the Fractional Knapsack problem?
 Ans: It maximizes profit by taking whole or fractional parts of items based on value/weight ratio.
@@ -115,15 +113,6 @@ Q4: Time complexity?
 Ans: O(n log n) due to sorting.
 Q5: Real-life example?
 Ans: Filling a bag with gold/sand — you can take fractions to maximize value.
-Q1. What is the Fractional Knapsack problem?
-It is a problem where we can take fractions of items to maximize total profit within a given weight capacity.
-Q2. Why do we use Greedy Approach here?
-Because selecting items based on the highest value/weight ratio first gives the optimal solution for this problem.
-Q3. Difference between 0/1 Knapsack & Fractional Knapsack?
-0/1 Knapsack	Fractional Knapsack
-Can't take fraction	Can take fraction
-DP required	Greedy is optimal
-More complex	Simple & faster
 
 Q4. What is the greedy strategy used?
 Sort items by value/weight ratio in descending order and pick maximum possible from each item
@@ -140,8 +129,7 @@ It stores how much portion of each item we took:
 Q9. Time complexity?
 O(n log n) due to sorting.
 Q10. Can greedy fail for knapsack problems?
-Yes
-Greedy works only for Fractional Knapsack.
+Yes,Greedy works only for Fractional Knapsack.
 For 0/1 Knapsack, greedy can fail — need Dynamic Programming.
 Q11. Why do we break after taking a fractional part?
 Because the knapsack is full after taking the remaining capacity — no more items can fit.
@@ -157,32 +145,16 @@ Total value = 240
 
 1. What is Greedy Approach?
 Answer:
-A greedy approach is an algorithmic strategy for solving optimization problems by making a sequence of choices, each of which looks the best at the moment.
+A greedy approach is an algorithmic strategy for solving optimization problems by making a sequence of choices, 
+each of which looks the best at the moment.
 At every step, it chooses the option that provides the most immediate benefit without reconsidering previous choices.
 Although it may not always produce the global optimum, it is often efficient and simple to implement.
 Advantages:
-•	Easy to describe and implement.
-•	Often faster than other algorithms (e.g., dynamic programming).
+Easy to describe and implement.
+Often faster than other algorithms (e.g., dynamic programming).
 Disadvantages:
-•	Does not always produce an optimal solution for all problems.
-•	Works best for problems with the greedy choice property and optimal substructure.
-2. Explain concept of Fractional Knapsack.
-Answer:
-The fractional knapsack problem is a variation of the 0/1 knapsack problem where items can be divided into smaller parts.
-The goal is to maximize the total value in a knapsack of limited capacity by taking fractions of items if taking the whole item would exceed the capacity.
-Example:
-If the remaining capacity is 10 kg and the next item weighs 20 kg, you can take half of it.
-Formula:
-[
-\text{Maximize } \sum \frac{v_i}{w_i} \text{ (value per unit weight)}
-]
-3. Differentiate between Fractional and 0/1 Knapsack.
-Feature	Fractional Knapsack	0/1 Knapsack
-Item Selection	Items can be divided (take fractions)	Items cannot be divided (take all or none)
-Approach	Solved using Greedy Method	Solved using Dynamic Programming
-Time Complexity	( O(n \log n) )	( O(nW) )
-Optimal Solution	Always optimal	May need exhaustive or dynamic approach
-Example	Can take ½ of an item	Must take full item or none
+Does not always produce an optimal solution for all problems.
+Works best for problems with the greedy choice property and optimal substructure.
 
 4. Solve one example based on Fractional Knapsack (Other than Manual).
 Item	Weight	Value
@@ -201,41 +173,5 @@ Step 3: Fill the knapsack:
 → Take 20/30 of Item 3 = (20/30) × 120 = 80
 Total Value = 60 + 100 + 80 = 240
 Maximum profit = 240 units
-5. What is the Time Complexity of Fractional Knapsack using Greedy Method?
-Answer:
-The main time complexity arises from sorting items by their value/weight ratio.
-•	Sorting takes: ( O(n \log n) )
-•	Filling the knapsack takes: ( O(n) )
- Total Time Complexity = O(n log n)
 
-6. Write a Python Program for Fractional Knapsack using Greedy Method.
-Answer:
-class Item:
-    def __init__(self, value, weight):
-        self.value = value
-        self.weight = weight
-
-def fractionalKnapsack(W, arr):
-    # Sort items by value/weight ratio
-    arr.sort(key=lambda x: x.value / x.weight, reverse=True)
-
-    final_value = 0.0
-
-    for item in arr:
-        if item.weight <= W:
-            W -= item.weight
-            final_value += item.value
-        else:
-            final_value += item.value * (W / item.weight)
-            break
-
-    return final_value
-
-# Driver Code
-if __name__ == "__main__":
-    W = 50
-    arr = [Item(60, 10), Item(100, 20), Item(120, 30)]
-    print("Maximum value we can obtain =", fractionalKnapsack(W, arr))
-✅ Output:
-Maximum value we can obtain = 240.0
 
