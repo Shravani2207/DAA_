@@ -224,22 +224,13 @@ Q26. What is memoization? A technique to store results of previous computations 
 Q27. How can memoization improve Fibonacci recursion?
  It reduces the time complexity from O(2ⁿ) to O(n).
 ________________________________________
-Q1. What is the Fibonacci series?
-It’s a sequence of numbers in which each term is the sum of the previous two terms.
-Example: 0, 1, 1, 2, 3, 5, 8, 13, 
 Q2. Who discovered the Fibonacci series?
  It was discovered by Leonardo Pisano Bogollo, also known as Fibonacci.
 Q3. What is the general formula for the Fibonacci sequence?
  F(n) = F(n-1) + F(n-2)
 with base values F(0) = 0 and F(1) = 1.
-Q4. What is meant by “n-th Fibonacci number”? It’s the value at the nth position in the Fibonacci sequence.
-Q5. Give an example calculation.
- If F(0) = 0, F(1) = 1, then
-F(2) = 1, F(3) = 2, F(4) = 3, F(5) = 5, F(6) = 8.
-Q6. What is recursion?
- Recursion is a process where a function calls itself until a base condition is met
-Q7. What is iteration (non-recursion)?
- Iteration uses loops (for or while) to repeat a process instead of function calls
+Q4. What is meant by “n-th Fibonacci number”?
+It’s the value at the nth position in the Fibonacci sequence.
 Q8. What are the base conditions in the recursive Fibonacci function?
  When n <= 1, return n.
 Q9What is the purpose of the base condition?
@@ -257,17 +248,6 @@ Q14. What is the space complexity of non-recursive Fibonacci?
  O(1) — only a few variables are used.
 Q15. Which approach is more efficient and why?
  The non-recursive (iterative) approach is more efficient because it uses less time and memory.
-Q16. Explain the working of the iterative algorithm.
-Start with two variables n1 = 0, n2 = 1.
-Print these two values.
-Repeat:
-nth = n1 + n2
-Update n1 = n2, n2 = nth.
-Continue until n terms are printed.
-Q17. Explain the recursive algorithm using steps.
-If n <= 1, return n.
-Else, return fibo(n-1) + fibo(n-2).
-Function keeps calling itself until base case reached.
 Q18. Draw or explain the flowchart for both methods.
 Non-recursive: Has a loop checking i <= n.
 Recursive: Has a decision block checking n <= 1 and calls itself twice.
@@ -288,12 +268,10 @@ Q24. What are some mathematical properties of the Fibonacci sequence?
 Ratio of consecutive numbers approaches the Golden Ratio (1.618).
 It can be expressed using Binet’s formula.
 Q25. What are the limitations of recursion?
-
 Slower execution for large n.
 High memory usage (stack overflow risk).
 Harder to debug than iteration.
 Q26. What is the prerequisite for this assignment?
-
 Basic Python/Java programming.
 Knowledge of recursion and loops.
 Understanding of time and space complexity.
@@ -307,11 +285,6 @@ What happens if you input n = 0 or a negative number?
 The program prints “Please enter a positive integer”.
 What is the base case in your recursive function?
 if n <= 1: return n
-What is the output for nterms = 7?
-0, 1, 1, 2, 3, 5, 8
-What is the time and space complexity of this recursive code?
-Time: O(2^N) (exponential)
-Space: O(N) (recursive stack)
 Why is recursion inefficient for large n?
 Because it recalculates the same values repeatedly.
 How can you optimize it?
@@ -333,8 +306,6 @@ It uses the matrix
 to derive the nth Fibonacci number using fast exponentiation.
 What is the Fibonacci Sequence?
 A series where each term is the sum of the previous two: 0, 1, 1, 2, 3, 5, 8, …
-How does the Fibonacci series work mathematically?
-F(n) = F(n−1) + F(n−2), with F(0)=0, F(1)=1.
 What is the Golden Ratio?
 The ratio of two successive Fibonacci numbers as n → ∞ ≈ 1.618.
 What is the Fibonacci Search technique?
@@ -392,7 +363,15 @@ third = first + second
 print(third, end = ' ') 
 first = second 
 second = third
-
+-----------------------------------------------
+Non-recursion
+iterative algorithm.
+Start with two variables n1 = 0, n2 = 1.
+Print these two values.
+Repeat:
+nth = n1 + n2
+Update n1 = n2, n2 = nth.
+Continue until n terms are printed.
         ┌──────────────┐
         (  Start F(n)  )
         └──────┬───────┘
@@ -420,5 +399,34 @@ second = third
         └──────┬─────┘
                │
                └───(Loop back to condition)
-
+-------------------------------------------------------
+recursion
+algorithm using steps.
+If n <= 1, return n.
+Else, return fibo(n-1) + fibo(n-2).
+Function keeps calling itself until base case reached.
+          ┌──────────────┐
+          (  Start F(n)  )
+          └──────┬───────┘
+                 │
+          ┌──────▼───────┐
+          │   Read n     │
+          └──────┬───────┘
+                 │
+        ┌────────▼──────────┐
+           Is n <= 1 ?   (♦)
+        └───┬───────────────┘
+        Yes │        No
+            │
+   ┌────────▼──────┐     ┌───────────────────────────┐
+   │  Return n     │     │ Return F(n-1) + F(n-2)    │
+   └───────┬───────┘     └───────────┬───────────────┘
+           │                          │
+           │        (Recursive calls) │
+           │<─────────────────────────┘
+                 calls & returns
+                       |
+                ┌──────▼──────┐
+                (   Stop      )
+                └─────────────┘
 
