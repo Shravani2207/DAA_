@@ -39,9 +39,10 @@ n = 4
 board = [['.' for _ in range(n)] for _ in range(n)]
 print(f"Solutions for {n}-Queens:\n")
 solveNQueens(board, 0, n)
+-----------------------------------------------------------------------------------------
 
-________________________________________
-Line-by-line explanation — N-Queens Backtracking (Python)
+
+Line-by-line explanation — 
 Quick summary before we go line-by-line: this program tries to place n queens on an n×n chessboard so that no two queens attack each other. 
 It uses backtracking: place a queen row-by-row, check safety, recurse, and undo (backtrack) when needed.
 Now the code with explanations for each line (I’ll show the line, then explain it):
@@ -89,7 +90,7 @@ j += 1
 Move one step up-right: decrement row index (i) and increment column index (j).
 return True
 If none of the three checks found a conflicting queen, it's safe to place a queen at (row, col) — return True.
-________________________________________
+
 def solveNQueens(board, row, n):
 Defines a recursive function solveNQueens that tries to place queens starting from row to n-1.
 Parameters:
@@ -118,7 +119,7 @@ Recurse: attempt to place queens in the next row. This explores deeper placement
 board[row][col] = '.'  # Backtrack
 Backtrack step: after returning from recursion (whether it found solutions or not), remove the queen from (row, col) so we can try the next column.
 This ensures the board state is restored for subsequent attempts.
-________________________________________
+
 # Driver Code
 n = 4
 Sets the board size n to 4. This means the program will search for 4-Queens solutions. Change n to any integer ≥ 1 to solve other sizes.
@@ -130,19 +131,7 @@ print(f"Solutions for {n}-Queens:\n")
 Prints a header like Solutions for 4-Queens: followed by an empty line.
 solveNQueens(board, 0, n)
 Starts the recursive backtracking by calling solveNQueens with the initial row = 0 (begin at the top row).
-________________________________________
-Additional notes / tips
-Complexity: The algorithm explores many possibilities; the worst-case time complexity grows quickly with n (exponential).
-Optimizations:
-Use sets (or bitmasks) to track used columns and diagonals for O(1) safety checks instead of scanning the board — this greatly speeds up larger n.
-The two diagonals can be indexed as row + col and row - col.
-Output: For n = 4, this code prints the two classic 4-queens solutions.
-If you want, I can:
-Annotate the code inline with comments,
-Show a step-by-step trace for n = 4 (where queens get placed and removed),
-Or convert this to the optimized version using sets / bitmasks. Which would you prefer?
-_________________________________
-
+------------------------------------------------------------------------------------------------------------
 
 
 QUESTIONS
