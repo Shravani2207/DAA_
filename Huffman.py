@@ -68,7 +68,9 @@ if __name__ == "__main__":
     print()
     decoded_text = huffman_decode(encoded_text, codes)
     print("Decoded Text:", decoded_text)
-  
+---------------------------------------------------------------------
+
+EXPLANATION
 Importing Libraries
 import heapq
 from collections import Counter
@@ -159,7 +161,9 @@ encoded_text, codes = huffman_encode(text)
 Encode text
 decoded_text = huffman_decode(encoded_text, codes)
 Decode to verify correctness
-________________________________________
+-----------------------------------------------------------------------------
+
+
 Questions
 Q1: What is Huffman Encoding?
 Huffman encoding is a lossless compression algorithm that assigns shorter binary codes to frequent characters and longer codes to less frequent ones.
@@ -210,7 +214,7 @@ Q19: Is this algorithm static or dynamic?
 This implementation is static Huffman coding.
 Q20: Why do we merge the smallest two frequencies?
 To minimize total code length — optimal prefix tree.
-________________________________________
+
 1. What is a Greedy Method?
 A greedy method is an approach for solving optimization problems by selecting the best option available at each step, hoping that this local choice will lead to a globally optimal solution.
 It always chooses the best immediate solution without worrying about future consequences.
@@ -258,5 +262,4 @@ Sppose a text string has characters A, B, and C with frequencies 5, 9, and 12.
 Using Huffman Encoding, shorter codes are assigned to the most frequent characters, reducing total bit size — hence saving storage space.
  15. What is the output of your Python program?
 The program outputs the Huffman codes for each character and the compressed encoded string.
-________________________________________
 
