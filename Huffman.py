@@ -1,5 +1,7 @@
 
 import heapq
+#Imports a min-heap library used for priority queue operations.
+#Huffman coding needs a min-heap to always pick the lowest-frequency characters first.
 from collections import Counter
 # Node structure for Huffman Tree
 class Node:
