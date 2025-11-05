@@ -79,6 +79,7 @@ import heapq
 from collections import Counter
 heapq: provides min-heap (priority queue) used for greedy selection of smallest frequencies
 Counter: counts frequency of each character in the text
+
 Node Class for Huffman Tree
 class Node:
 def __init__(self, char=None, freq=0):
@@ -92,10 +93,12 @@ char → character
 freq → frequency of character
 left & right pointers for binary tree structure
 Comparison Logic for Heap
+
 def __lt__(self, other):
 return self.freq < other.freq
 __lt__ = less than
 It defines how to compare two objects when using the < operator.
+
 Build Huffman Tree
 def build_huffman_tree(text):
 frequency = Counter(text) 
@@ -118,11 +121,14 @@ heapq.heappush(heap, merged)
 Push the merged node back into heap
 return heap[0]
 When loop ends → only root node remains
+
 Generate Huffman Codes
 def generate_codes(node, prefix="", code_map=None):
 if code_map is None:
 code_map = {}
-Initialize dictionary to store character→code mapping
+Start recursion from the root node
+prefix stores the binary code being built
+code_map will store codes for each character
 if node is None:
 return code_map
 Base case — empty node
@@ -134,29 +140,35 @@ generate_codes(node.right, prefix + "1", code_map)
 Recursive call:
 Left edge adds 0
 Right edge adds 1
+
 Encode Function
 def huffman_encode(text):
 root = build_huffman_tree(text)
-Build Huffman tree
+Build Huffman tree#Creates tree nodes
 codes = generate_codes(root)
-Generate Huffman codes for each character
+Traverse the tree
+Assign binary codes
+Left child → 0
+Right child → 1
 encoded_text = ''.join(codes[char] for char in text)
-Convert each character into its code → make final binary string
+This replaces each character in text with its Huffman code.
 return encoded_text, codes
+
 Return encoded string & code dictionary
 Decode Function
 reverse_codes = {v: k for k, v in codes.items()}
-Reverse mapping (binary→character)
+Reverse mapping (binary→character)#We reverse because during decoding, we read bits 
+#and try to match codes to get characters.
 decoded_text = ""
 temp = ""
-Initialize empty strings for decoding
-for bit in encoded_text:
-temp += bit
+decoded_text → final decoded output string
+temp → stores bits until they match a codefor bit in encoded_text:
+temp += bit#We add bits one by one and check if they form a valid code.
 if temp in reverse_codes:
 decoded_text += reverse_codes[temp]
 temp = ""
-Read bits one by one
-Whenever temp matches a code → convert to character
+#Convert bits to character,Add to decoded_text,Reset temp to read next bits
+
 Main Program
 text = "this is an example for huffman encoding"
 Input string
