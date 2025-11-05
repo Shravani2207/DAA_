@@ -41,88 +41,107 @@ print(f"Solutions for {n}-Queens:\n")
 solveNQueens(board, 0, n)
 
 ________________________________________
-
-
-
-
+Line-by-line explanation — N-Queens Backtracking (Python)
+Quick summary before we go line-by-line: this program tries to place n queens on an n×n chessboard so that no two queens attack each other. 
+It uses backtracking: place a queen row-by-row, check safety, recurse, and undo (backtrack) when needed.
+Now the code with explanations for each line (I’ll show the line, then explain it):
 # N-Queens Problem using Backtracking
-A plain comment telling anyone reading the file what this program solves.
-Function: isSafe
+Comment: a brief title. Ignored by Python; for humans only.
 def isSafe(board, row, col, n):
-Defines a function named isSafe that checks whether placing a queen at position (row, col) on board of size n is safe (i.e., no other queen attacks it). Parameters:
-board: 2D list representing the chessboard ('Q' for queen, '.' for empty).
-row, col: coordinates to check.
-n: board size (n x n).
+Defines a function named isSafe that checks whether placing a queen at board[row][col] is safe. Parameters:
+board: 2D list (rows × cols) representing the board (each cell '.' or 'Q').
+row, col: coordinates where we want to place a queen.
+n: board size (number of rows/columns).
 # Check same column
+Comment: the next block will check whether any queen is already in the same column above the current row.
 for i in range(row):
+Loop over row indices 0 to row-1 (only the rows above the current one).
+We only need to check previous rows because queens are placed one row at a time top → bottom.
 if board[i][col] == 'Q':
+If any of those cells in the same col contains 'Q', then there's a queen in the same column.
 return False
-Loops i from 0 to row-1. Because we place queens row by row top→down, only rows above current row can have queens.
-if board[i][col] == 'Q': If any square in the same column above has a queen → conflict.
-return False: Not safe; stop checking and return False.
+If a queen is found in the same column above, placing here is unsafe — return False.
 # Check upper left diagonal
+Comment: next check the diagonal that goes up and left from (row, col).
 i, j = row, col
+Initialize i and j to start at the current position. We'll walk up-left by decrementing both.
 while i >= 0 and j >= 0:
+Loop while indices stay within the board in the up-left direction.
 if board[i][j] == 'Q':
+If at any visited cell on that diagonal there is a queen...
 return False
+...placing at (row, col) would be attacked from that diagonal — so return False.
 i -= 1
 j -= 1
-Sets i, j to start at the current position.
-The while loop traverses the upper-left diagonal (decreasing both row and column).
-If any square on that diagonal contains 'Q', return False (conflict).
-Otherwise decrement i and j to move one step up-left until boundary.
+Move one step up-left (decrement row and column) and continue checking.
 # Check upper right diagonal
+Comment: next check diagonal going up and right.
 i, j = row, col
+Reset i and j to the starting position again.
 while i >= 0 and j < n:
+Loop while i is within top edge (≥0) and j is within right edge (< n). This walks up-right.
 if board[i][j] == 'Q':
+If a queen exists on this diagonal...
 return False
+...it's unsafe; return False.
 i -= 1
 j += 1
-Re-initialize i, j to current position.
-This loop checks the upper-right diagonal (decreasing row, increasing column).
-If any 'Q' found there, return False.
-Continue moving up-right while inside board.
+Move one step up-right: decrement row index (i) and increment column index (j).
 return True
-If none of the checks found a conflicting queen, return True — the position (row, col) is safe.
-
-Function: solveNQueens
+If none of the three checks found a conflicting queen, it's safe to place a queen at (row, col) — return True.
+________________________________________
 def solveNQueens(board, row, n):
-Defines the recursive backtracking function that tries to place queens row by row.
-board: current board state.
-row: index of current row where we need to place a queen.
+Defines a recursive function solveNQueens that tries to place queens starting from row to n-1.
+Parameters:
+board: current board state (2D list).
+row: current row where we are attempting to place a queen.
 n: board size.
 if row == n:
+Base case: if row == n, we've successfully placed queens on rows 0 through n-1 (all rows). A full solution is found.
 for r in board:
+Iterate over each row r in the board to print the solution.
 print(" ".join(r))
+Print that row as space-separated characters (e.g., . Q . .). This displays the board in a readable format.
 print()
+Print a blank line to separate multiple solutions visually.
 return
-Base case: If row == n, we have placed queens on rows 0..n-1 → a full valid solution.
-for r in board: print(" ".join(r)) prints the board row by row with spaces between cells (visual format).
-print() prints a blank line between solutions.
-return stops further recursion for this branch (we go back to find other solutions).
+Return from this recursive call — we found a solution and printed it. 
+The caller will continue to search for more solutions (backtracking).
 for col in range(n):
-Loop over all columns in the current row to try placing a queen in each column.
+Loop over each column in the current row; try placing a queen at (row, col) for every col from 0 to n-1.
 if isSafe(board, row, col, n):
-Call isSafe to check if position (row, col) is safe. If not safe, skip to next column.
+Check if it's safe to place a queen at (row, col) using the isSafe function described earlier.
 board[row][col] = 'Q'
-Place a queen at (row, col) (choose this option).
+If safe, place a queen there by setting the board cell to 'Q'.
 solveNQueens(board, row + 1, n)
-Recurse to try placing queens in the next row (move forward). This explores all solutions that include the current placement.
+Recurse: attempt to place queens in the next row. This explores deeper placements with the current queen fixed.
 board[row][col] = '.'  # Backtrack
-After recursion returns, remove the queen — this is backtracking. It restores board to try the next column placement in the loop.
-
-Driver code: set up & call
+Backtrack step: after returning from recursion (whether it found solutions or not), remove the queen from (row, col) so we can try the next column.
+This ensures the board state is restored for subsequent attempts.
+________________________________________
 # Driver Code
 n = 4
-Sets board size n = 4. You can change n to find solutions for any N.
+Sets the board size n to 4. This means the program will search for 4-Queens solutions. Change n to any integer ≥ 1 to solve other sizes.
 board = [['.' for _ in range(n)] for _ in range(n)]
-Creates an n x n 2D list filled with '.' representing empty cells.
-Uses list comprehension: inner ['.' for _ in range(n)] makes one row; outer repeats it n times.
+Create an n × n board represented as a list of lists. Each cell is initialized to '.' meaning empty. This is a nested list comprehension:
+outer list: creates n rows,
+inner: creates n columns each containing '.'.
 print(f"Solutions for {n}-Queens:\n")
-Prints a header, showing which n is being solved.
+Prints a header like Solutions for 4-Queens: followed by an empty line.
 solveNQueens(board, 0, n)
-Starts the backtracking from row = 0 (first row).
+Starts the recursive backtracking by calling solveNQueens with the initial row = 0 (begin at the top row).
 ________________________________________
+Additional notes / tips
+Complexity: The algorithm explores many possibilities; the worst-case time complexity grows quickly with n (exponential).
+Optimizations:
+Use sets (or bitmasks) to track used columns and diagonals for O(1) safety checks instead of scanning the board — this greatly speeds up larger n.
+The two diagonals can be indexed as row + col and row - col.
+Output: For n = 4, this code prints the two classic 4-queens solutions.
+If you want, I can:
+Annotate the code inline with comments,
+Show a step-by-step trace for n = 4 (where queens get placed and removed),
+Or convert this to the optimized version using sets / bitmasks. Which would you prefer?
+_________________________________
 
 
 
