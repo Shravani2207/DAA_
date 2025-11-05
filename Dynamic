@@ -1,0 +1,191 @@
+# 0-1 Knapsack Problem using Dynamic Programming
+def knapsack(values, weights, capacity):
+ n = len(values)
+
+ # Create DP table of size (n+1) x (capacity+1)
+ dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+
+ # Build table dp[][] in bottom-up manner
+ for i in range(1, n + 1):
+    for w in range(1, capacity + 1):
+        if weights[i - 1] <= w:
+ # Max of including or excluding the current item
+            dp[i][w] = max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i -1][w])
+        else:
+            dp[i][w] = dp[i - 1][w]
+
+ # To find which items are included
+ w = capacity
+ items_taken = []
+ for i in range(n, 0, -1):
+    if dp[i][w] != dp[i - 1][w]:
+        items_taken.append(i - 1)
+ w -= weights[i - 1]
+ items_taken.reverse() # Optional: to show in order
+ return dp[n][capacity], items_taken
+
+# Driver code
+if __name__ == "__main__":
+    values = [60, 100, 120] # Values of items
+    weights = [10, 20, 30] # Weights of items
+    capacity = 50 # Maximum capacity of knapsack
+    max_value, items_taken = knapsack(values, weights, capacity)
+    print("Maximum Value in Knapsack:", max_value)
+    print("Items taken (0-based indices):", items_taken)
+
+-----------------------------------------------------------------------------------------------------
+
+EXPLANATION
+
+def knapsack(values, weights, capacity):
+Defines a function named knapsack that takes three arguments:
+values: list of item values (profits),
+weights: list of item weights,
+capacity: integer, maximum weight the knapsack can carry.
+n = len(values)
+Sets n to the number of items (length of the values list). Assumes values and weights are same-length.
+# Create DP table of size (n+1) x (capacity+1)
+dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+Creates the DP table dp as a 2D list (matrix) with (n+1) rows and (capacity+1) columns, initialized to 0.
+dp[i][w] will hold the maximum value achievable using the first i items with knapsack capacity w.
+We use n+1 and capacity+1 so we can handle the base cases easily (0 items or 0 capacity).
+# Build table dp[][] in bottom-up manner
+for i in range(1, n + 1):
+Outer loop: iterate i from 1 to n inclusive. i represents considering the first i items.
+for w in range(1, capacity + 1):
+Inner loop: iterate w from 1 to capacity inclusive. w represents the current capacity limit we are evaluating.
+if weights[i - 1] <= w:
+Check if the i-th item (index i-1 in 0-based lists) can fit into the current capacity w. If its weight is ≤ w, we can consider including it.
+# Max of including or excluding the current item
+dp[i][w] = max(values[i - 1] + dp[i - 1][w - weights[i - 1]], dp[i -1][w])
+If the item fits, compute the maximum of two choices and store in dp[i][w]:
+Include the item: values[i-1] + dp[i-1][w - weights[i-1]] (value of this item plus best value with remaining capacity using previous items),
+Exclude the item: dp[i-1][w] (best value without including this item).
+Take max(...) of the two.
+else:
+dp[i][w] = dp[i - 1][w]
+If the item's weight is greater than w (it doesn't fit), we cannot include it; so dp[i][w] equals the value excluding the item (same as dp[i-1][w]).
+# To find which items are included
+w = capacity
+items_taken = []
+After filling the DP table, set w to the full knapsack capacity to reconstruct the chosen items. 
+Initialize items_taken as an empty list to store the indices of items that ended up in the optimal solution.
+for i in range(n, 0, -1):
+Loop backwards from i = n down to 1. This iterates items in reverse order to find which were taken by comparing DP values.
+if dp[i][w] != dp[i - 1][w]:
+items_taken.append(i - 1)
+Compare dp[i][w] and dp[i-1][w]:
+If they are different, it means the i-th item was included in the optimal solution for capacity w (because including it changed the optimum),
+So append the 0-based index i-1 to items_taken.
+w -= weights[i - 1]
+This line as written in your snippet is currently outside the if block and outside the for loop's intended scope (due to indentation).
+Intended behavior: only reduce w by weights[i-1] when the item was actually taken (i.e., inside the if block). 
+If it's executed unconditionally (as in your pasted code), it will subtract the weight for every item whether it was taken or not — which breaks reconstruction
+and can cause incorrect/wrong indices or negative w.
+Correct intended line (must be inside the if block):
+if dp[i][w] != dp[i - 1][w]:
+items_taken.append(i - 1)
+w -= weights[i - 1]   # move to the remaining capacity only if item was taken
+items_taken.reverse() # Optional: to show in order
+Reverse the list of taken items so they appear in increasing order (from smallest index to largest), since we appended them in reverse order during backtracking.
+return dp[n][capacity], items_taken
+Return a tuple:
+dp[n][capacity]: the maximum value achievable with n items and the given capacity (the final answer),
+items_taken: list of 0-based indices of items included in that optimal solution.
+# Driver code
+if __name__ == "__main__":
+Standard Python way to run driver/test code only when the script is executed directly (not when imported as a module).
+values = [60, 100, 120] # Values of items
+weights = [10, 20, 30] # Weights of items
+capacity = 50 # Maximum capacity of knapsack
+Example input:
+three items with values 60, 100, 120 and weights 10, 20, 30,
+knapsack capacity 50.
+max_value, items_taken = knapsack(values, weights, capacity)
+Call the knapsack function with these inputs and unpack the returned tuple into max_value and items_taken.
+print("Maximum Value in Knapsack:", max_value)
+print("Items taken (0-based indices):", items_taken)
+Print the final maximum value and the chosen items' indices.
+
+Important bug note (again, succinct)
+Your original code's w -= weights[i - 1] was indented incorrectly (or placed outside the if), so it always executes and corrupts the backtracking. 
+The correct reconstruction block should look like this:
+w = capacity
+items_taken = []
+for i in range(n, 0, -1):
+if dp[i][w] != dp[i - 1][w]:
+items_taken.append(i - 1)
+w -= weights[i - 1]   # <-- must be inside the if
+items_taken.reverse()
+With that fix, for your sample input, the output will be:
+Maximum Value in Knapsack: 220
+Items taken (0-based indices): [1, 2]
+(Items 1 and 2 have values 100 and 120 with total weight 20+30=50 -> value 220.)
+
+Complexity
+Time: O(n * capacity) due to the DP table filling.
+Space: O(n * capacity) for the dp table. (Can be optimized to O(capacity) if you only need the maximum value, but then reconstructing items needs extra care or different storage.)
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+QUESTIONS
+
+What is the 0-1 Knapsack problem?
+It is an optimization problem where each item can either be taken completely (1) or not taken (0). The goal is to maximize total value without exceeding the knapsack’s capacity.
+Why is it called 0-1 knapsack?
+Because each item has only two choices:
+0 → do not include
+1 → include fully
+No fractional picking allowed.
+
+What is the difference between 0-1 knapsack and fractional knapsack?
+0-1 Knapsack	Fractional Knapsack
+Can't take fractions	Can take fractions of an item
+Solved using DP	Solved using Greedy
+Binary decision	Continuous decision
+Why do we use Dynamic Programming here?
+Because the problem has overlapping subproblems and optimal substructure, making DP suitable.
+What does dp[i][w] represent?
+Maximum value possible using first i items with knapsack capacity w.
+Explain the DP relation used in this code
+dp[i][w] = max(
+value[i−1] + dp[i−1][w − weight[i−1]],   # include item
+dp[i−1][w]                               # exclude item
+)
+We choose the maximum value obtained by including or excluding the current item
+What is the base case?
+When i = 0 (no items) OR w = 0 (capacity zero):
+dp[i][w] = 
+What is the time and space complexity?
+Time: O(n * capacity)
+Space: O(n * capacity) (can be optimized to O(capacity))
+Why do we loop from 1 to n and 1 to capacity?
+Because row 0 and column 0 represent base case (no items or zero capacity).
+Why do we subtract weight in backtracking?
+To move to the remaining capacity after selecting that item:
+w -= weights[i - 1]
+Why do we reverse items_taken?
+Because we backtrack from last item to first, so reversing gives correct order
+What does max(...) do here?
+It chooses the best value between including or excluding the current item.
+What is printed as final output?
+Maximum achievable value
+List of item indices included in optimal solution
+Example:
+Maximum Value in Knapsack: 220
+Items taken (0-based indices): [1, 2]
+Why do we use a 2D DP table?
+To store all subproblem results and avoid recomputation.
+Can this code be optimized? How?
+Yes, using 1D DP array to reduce space from O(n*W) to O(W).
+Can we solve 0-1 knapsack using greedy?
+No. Greedy does not always produce optimal results in 0-1 knapsack (only works for fractional knapsack).
+What happens if two items have same weight and value?
+Either can be chosen — DP will handle it
+What happens if capacity is 0?
+Output is 0 (no items can be included)
+Can we get multiple correct solutions?
+Yes, if there are ties — DP picks one optimal set.
+What is optimal substructure?
+Optimal solution can be formed from optimal solutions of subproblems — key DP property.
+
+
