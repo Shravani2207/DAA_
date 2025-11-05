@@ -38,39 +38,6 @@ Space Complexity: O(n) due to recursion stack
 Non-Recursive Fibonacci:
 Time Complexity: O(n)
 Space Complexity: O(1)
------------------------------------------
-# Recursive Fibonacci Function
-def recursive_fibo(n):
-if n in (0, 1):
-return n
-return recursive_fibo(n-1) + recursive_fibo(n-2)
-
-# Non-Recursive (Iterative) Fibonacci Function
-def non_recursive_fibo(n):
-first = 0
-second = 1
-fib_sequence = [first, second]
-for i in range(n - 2):
-third = first + second
-fib_sequence.append(third)
-first = second
-second = third
-return fib_sequence
-
-n = int(input("Enter the number of terms: "))
-if n <= 0:
-print("Invalid Input. Please enter a positive integer.")
-else:
-# Recursive Approach
-print("\nFibonacci Sequence using Recursion:")
-for i in range(n):
-print(recursive_fibo(i), end=" ")
-
-# Non-Recursive Approach
-print("\n\nFibonacci Sequence using Non-Recursion:")
-fib_iter = non_recursive_fibo(n)
-for num in fib_iter:
-print(num, end=" ")
 ------------------------------------------------------------------------------
 
 
