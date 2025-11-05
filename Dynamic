@@ -189,4 +189,81 @@ Yes, if there are ties — DP picks one optimal set.
 What is optimal substructure?
 Optimal solution can be formed from optimal solutions of subproblems — key DP property.
 
+Questions
+Q1: What is the Fractional Knapsack problem?
+Ans: It maximizes profit by taking whole or fractional parts of items based on value/weight ratio.
+Q2: Why is the greedy approach used?
+Ans: Because choosing the highest value/weight ratio first always gives optimal solution.
+Q3: Difference between 0/1 Knapsack & Fractional Knapsack?
+0/1 Knapsack	Fractional Knapsack
+Can't break items	Items can be divided
+Uses DP	Uses Greedy
+Not always greedy optimal	Greedy gives optimal
+Q4: Time complexity?
+Ans: O(n log n) due to sorting.
+Q5: Real-life example?
+Ans: Filling a bag with gold/sand — you can take fractions to maximize value.
+
+Q4. What is the greedy strategy used?
+Sort items by value/weight ratio in descending order and pick maximum possible from each item
+Q5. Real Life Example?
+Filling a bag with gold powder or rice — you can take fractions to maximize value.Q6. Why do we calculate value/weight ratio?
+To determine which item gives maximum profit per unit weight.
+Q7. Why do we sort items?
+To always pick the best (highest ratio) item first — greedy choice.
+Q8. What does fractions list store?
+It stores how much portion of each item we took:
+1 → full item taken
+0.x → fraction taken
+0 → not taken
+Q9. Time complexity?
+O(n log n) due to sorting.
+Q10. Can greedy fail for knapsack problems?
+Yes,Greedy works only for Fractional Knapsack.
+For 0/1 Knapsack, greedy can fail — need Dynamic Programming.
+Q11. Why do we break after taking a fractional part?
+Because the knapsack is full after taking the remaining capacity — no more items can fit.
+Q12. What happens if two items have same ratio?
+Either can be chosen first — result remains optimal.
+Q13. For values = [60,100,120], weights=[10,20,30], capacity=50
+Answer:
+Take items	Weight	Value
+Whole #1	10	60
+Whole #2	20	100
+⅔ of #3	20	80
+Total value = 240
+
+1. What is Greedy Approach?
+Answer:
+A greedy approach is an algorithmic strategy for solving optimization problems by making a sequence of choices, 
+each of which looks the best at the moment.
+At every step, it chooses the option that provides the most immediate benefit without reconsidering previous choices.
+Although it may not always produce the global optimum, it is often efficient and simple to implement.
+Advantages:
+Easy to describe and implement.
+Often faster than other algorithms (e.g., dynamic programming).
+Disadvantages:
+Does not always produce an optimal solution for all problems.
+Works best for problems with the greedy choice property and optimal substructure.
+
+4. Solve one example based on Fractional Knapsack (Other than Manual).
+Item	Weight	Value
+1	10	60
+2	20	100
+3	30	120
+Knapsack Capacity (W) = 50
+Step 1: Compute Value/Weight ratio:
+Item 1 → 6, Item 2 → 5, Item 3 → 4
+Step 2: Sort in decreasing order of ratio:
+(1), (2), (3)
+Step 3: Fill the knapsack:
+•	Take full Item 1 (weight = 10, value = 60)
+•	Take full Item 2 (weight = 20, value = 100)
+•	Remaining capacity = 20 kg
+→ Take 20/30 of Item 3 = (20/30) × 120 = 80
+Total Value = 60 + 100 + 80 = 240
+Maximum profit = 240 units
+
+
+
 
