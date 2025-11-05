@@ -85,6 +85,8 @@ board = [['.' for _ in range(n)] for _ in range(n)]
 print(f"Solutions for {n}-Queens:\n")
 solveNQueens(board, 0, n)
 ________________________________________
+
+
 # N-Queens Problem using Backtracking
 A plain comment telling anyone reading the file what this program solves.
 Function: isSafe
