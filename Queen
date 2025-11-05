@@ -43,13 +43,10 @@ solveNQueens(board, 0, n)
 
 
 Line-by-line explanation — 
-Quick summary before we go line-by-line: this program tries to place n queens on an n×n chessboard so that no two queens attack each other. 
-It uses backtracking: place a queen row-by-row, check safety, recurse, and undo (backtrack) when needed.
-Now the code with explanations for each line (I’ll show the line, then explain it):
-# N-Queens Problem using Backtracking
-Comment: a brief title. Ignored by Python; for humans only.
+
 def isSafe(board, row, col, n):
-Defines a function named isSafe that checks whether placing a queen at board[row][col] is safe. Parameters:
+Defines a function named isSafe that checks whether placing a queen at board[row][col] is safe. 
+Parameters:
 board: 2D list (rows × cols) representing the board (each cell '.' or 'Q').
 row, col: coordinates where we want to place a queen.
 n: board size (number of rows/columns).
@@ -62,8 +59,9 @@ if board[i][col] == 'Q':
 If any of those cells in the same col contains 'Q', then there's a queen in the same column.
 return False
 If a queen is found in the same column above, placing here is unsafe — return False.
+
 # Check upper left diagonal
-Comment: next check the diagonal that goes up and left from (row, col).
+ next check the diagonal that goes up and left from (row, col).
 i, j = row, col
 Initialize i and j to start at the current position. We'll walk up-left by decrementing both.
 while i >= 0 and j >= 0:
@@ -75,21 +73,21 @@ return False
 i -= 1
 j -= 1
 Move one step up-left (decrement row and column) and continue checking.
+
 # Check upper right diagonal
 Comment: next check diagonal going up and right.
 i, j = row, col
 Reset i and j to the starting position again.
 while i >= 0 and j < n:
-Loop while i is within top edge (≥0) and j is within right edge (< n). This walks up-right.
+Move up (i -= 1) and right (j += 1) until we go outside the board
 if board[i][j] == 'Q':
 If a queen exists on this diagonal...
 return False
-...it's unsafe; return False.
-i -= 1
-j += 1
-Move one step up-right: decrement row index (i) and increment column index (j).
+Not safe — queen would be attacked
+i -= 1#Move one step up
+j += 1#Move one step to the right
 return True
-If none of the three checks found a conflicting queen, it's safe to place a queen at (row, col) — return True.
+If we finish checking and find no queen, it's safe
 
 def solveNQueens(board, row, n):
 Defines a recursive function solveNQueens that tries to place queens starting from row to n-1.
@@ -98,7 +96,7 @@ board: current board state (2D list).
 row: current row where we are attempting to place a queen.
 n: board size.
 if row == n:
-Base case: if row == n, we've successfully placed queens on rows 0 through n-1 (all rows). A full solution is found.
+Base case: if row == n, we've successfully placed queens on rows 0 through n-1 (all rows). 
 for r in board:
 Iterate over each row r in the board to print the solution.
 print(" ".join(r))
@@ -108,8 +106,9 @@ Print a blank line to separate multiple solutions visually.
 return
 Return from this recursive call — we found a solution and printed it. 
 The caller will continue to search for more solutions (backtracking).
+
 for col in range(n):
-Loop over each column in the current row; try placing a queen at (row, col) for every col from 0 to n-1.
+Loop through all columns in the current row,Try placing queen in each position (row, col)
 if isSafe(board, row, col, n):
 Check if it's safe to place a queen at (row, col) using the isSafe function described earlier.
 board[row][col] = 'Q'
@@ -122,9 +121,11 @@ This ensures the board state is restored for subsequent attempts.
 
 # Driver Code
 n = 4
-Sets the board size n to 4. This means the program will search for 4-Queens solutions. Change n to any integer ≥ 1 to solve other sizes.
+Sets the board size n to 4. This means the program will search for 4-Queens solutions.
+Change n to any integer ≥ 1 to solve other sizes.
 board = [['.' for _ in range(n)] for _ in range(n)]
-Create an n × n board represented as a list of lists. Each cell is initialized to '.' meaning empty. This is a nested list comprehension:
+Create an n × n board represented as a list of lists. Each cell is initialized to '.' meaning empty. 
+This is a nested list comprehension:
 outer list: creates n rows,
 inner: creates n columns each containing '.'.
 print(f"Solutions for {n}-Queens:\n")
@@ -177,7 +178,8 @@ Q15. Why do we place one queen per row?
 Because each queen must be in a different row.
 ________________________________________
 1. What is backtracking?
-Backtracking is a general algorithmic technique for finding solutions to computational problems incrementally, by trying partial solutions and then abandoning them if they cannot be extended to a complete solution.
+Backtracking is a general algorithmic technique for finding solutions to computational problems incrementally,
+by trying partial solutions and then abandoning them if they cannot be extended to a complete solution.
 It systematically searches for a solution by exploring all possible options and backtracking when a solution path fails.
 2. What are the applications of backtracking?
 N-Queens Problem
@@ -185,7 +187,8 @@ N-Queens Problem
 2.	Graph coloring
 3.	Hamiltonian cycle
 3. What is the N-Queens problem?
-The N-Queens problem is to place N queens on an N×N chessboard such that no two queens attack each other. That means no two queens can be in the same row, column, or diagonal.
+The N-Queens problem is to place N queens on an N×N chessboard such that no two queens attack each other.
+That means no two queens can be in the same row, column, or diagonal.
 4. What is the 4-Queens problem
 In the 4-Queens problem, we have to place 4 queens on a 4×4 chessboard so that no two queens attack each other.
 The two possible solutions (represented as column positions for each row) are:
