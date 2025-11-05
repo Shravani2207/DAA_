@@ -174,4 +174,13 @@ Step 3: Fill the knapsack:
 Total Value = 60 + 100 + 80 = 240
 Maximum profit = 240 units
 
-
+-------------------------------------------------
+Fractional Knapsack Problem Using Greedy Method- 
+Fractional knapsack problem is solved using greedy method in the following steps- 
+Step-01: 
+For each item, compute its value / weight ratio. 
+Step-02: 
+Arrange all the items in decreasing order of their value / weight ratio. 
+Step-03: 
+Start putting the items into the knapsack beginning from the item with the highest ratio. 
+Put as many items as you can into the knapsack. 
