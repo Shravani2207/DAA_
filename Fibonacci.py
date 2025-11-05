@@ -73,6 +73,8 @@ fib_iter = non_recursive_fibo(n)
 for num in fib_iter:
 print(num, end=" ")
 ________________________________________
+
+
 Line-by-Line Explanation
 Recursive Fibonacci Function
 # Recursive Fibonacci Function
@@ -157,6 +159,10 @@ Method	Time Complexity	Space Complexity	Notes
 Recursive	O(2ⁿ)	O(n)	Many repeated function calls
 Non-Recursive	O(n)	O(1)	Uses a simple loop, faster and memory-efficient
 ________________________________________
+
+
+
+
 Question
 Q1. What is the Fibonacci series?
 The Fibonacci series is a sequence where each number is the sum of the previous two numbers.
