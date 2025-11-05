@@ -17,17 +17,17 @@ class Node:
 # Function to build Huffman Tree (Greedy)
 def build_huffman_tree(text):
     frequency = Counter(text)  # Count frequency of each character
-    heap = [Node(char, freq) for char, freq in frequency.items()]
-    heapq.heapify(heap)  # Min-heap based on frequency
-    while len(heap) > 1:
+    heap = [Node(char, freq) for char, freq in frequency.items()]#Creates a Node object for each character and frequency.
+    heapq.heapify(heap)  # Converts the list into a min-heap (priority queue).
+    while len(heap) > 1:#Repeat until only one node remains 
         # Extract two nodes with smallest frequency
         left = heapq.heappop(heap)
-        right = heapq.heappop(heap)
+        right = heapq.heappop(heap)#Pop the two smallest frequency nodes 
         # Merge nodes
         merged = Node(freq=left.freq + right.freq)
         merged.left = left
         merged.right = right
-        heapq.heappush(heap, merged)
+        heapq.heappush(heap, merged)#Push the merged node back into heap
     return heap[0]  # Root of the Huffman tree
 
 # Function to generate Huffman Codes
@@ -39,7 +39,8 @@ def generate_codes(node, prefix="", code_map=None):
     if node.char is not None:  # Leaf node
         code_map[node.char] = prefix
     generate_codes(node.left, prefix + "0", code_map)
-    generate_codes(node.right, prefix + "1", code_map)
+    generate_codes(node.right, prefix + "1", code_map)#Left edge adds 0,Right edge adds 1
+
     return code_map
 # Function to encode text
 def huffman_encode(text):
@@ -93,8 +94,8 @@ left & right pointers for binary tree structure
 Comparison Logic for Heap
 def __lt__(self, other):
 return self.freq < other.freq
-Allows Python to compare two nodes based on frequency
-Used by heapq to pick smallest frequency node first (greedy)
+__lt__ = less than
+It defines how to compare two objects when using the < operator.
 Build Huffman Tree
 def build_huffman_tree(text):
 frequency = Counter(text) 
