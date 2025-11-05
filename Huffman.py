@@ -240,9 +240,6 @@ It always chooses the best immediate solution without worrying about future cons
 3. What are the drawbacks of the Greedy Approach?
 The greedy approach does not always produce the optimal global solution.
 It may get stuck at a local optimum because it never revises previous choices.
-4. What is Huffman Encoding?
-Huffman Encoding is a lossless data compression algorithm that uses variable-length codes for characters. Characters that occur more frequently are assigned shorter codes, while rare characters get longer codes.
-It is based on the Greedy method.
 5. What is the Huffman Rule?
 Huffman coding follows the prefix rule, meaning no code assigned to a character is a prefix of the code for another character.
 This prevents any ambiguity during decoding.
@@ -264,9 +261,7 @@ Overall time complexity = O(n log n)
 Used in file compression (e.g., ZIP files).
 •	Multimedia formats like JPEG, MP3, and PNG.
 •	Data transmission where efficient encoding saves bandwidth.
-10. Why is Huffman Encoding considered a Greedy Algorithm?
 11. What is meant by a prefix code?
-Answer:
 A prefix code ensures that no code is a prefix of another code, making decoding unambiguous and efficient
  12. What programming languages can be used to implement Huffman Encoding?
 It can be implemented using Python, Java, or C++
