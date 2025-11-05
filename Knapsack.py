@@ -44,31 +44,42 @@ Defines a function to calculate maximum profit.
     items = []
 n = number of items, items list to store ratio + value + weight.
     for i in range(n):
-        ratio = values[i] / weights[i]
+        ratio = values[i] / weights[i]# # Calculate value-to-weight ratio
         items.append((ratio, values[i], weights[i]))
 Calculates value/weight ratio for each item and stores all info.
     items.sort(reverse=True, key=lambda x: x[0])
-Sorts items in descending order of ratio (Greedy step — highest ratio first)
-    total_value = 0
+#Sort the list of items by value-to-weight ratio (highest first). 
+We take the most profitable item first.
+total_value = 0#Variable to store the total value we collect in the knapsack.
     fractions = [0] * n
-total_value stores answer; fractions tracks which fraction of each item we take.
+#Creates a list to store fraction of each item taken. 
+#Initially all items are taken 0%. (For example: [0,0,0,0])
     for ratio, value, weight in items:
+        #Loop through each item in sorted order (highest ratio first).
         if capacity >= weight:
-Loop through items, check if full item can fit.
+            #Check if the remaining bag capacity can fit the entire item.
             capacity -= weight
+            #Deduct the weight from the knapsack
             total_value += value
+            #Add full item's value to total value.
             fractions[values.index(value)] = 1
 If yes → add full item (fraction = 1)
         else:
             fraction = capacity / weight
             total_value += value * fraction
             fractions[values.index(value)] = fraction
+            #Stores how much fraction of that item was taken (0 to 1 scale).
             break
+            #Stops the loop because the knapsack is now full — no more items can be taken.
 Else → take only the fraction that fits, then stop (bag full)
     return total_value, fractions
+#total_value: Maximum value obtained
+#fractions: How much of each item was taken
 Return max value & fractions list
 
  Driver Code Output Explanation
+if __name__ == "__main__":
+    #This means below code runs only when you execute the file, not when imported.
 values = [60, 100, 120]
 weights = [10, 20, 30]
 capacity = 50
