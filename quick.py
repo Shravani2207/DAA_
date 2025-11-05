@@ -48,12 +48,9 @@ if __name__ == "__main__":
     end = time.time()
     print("\nSorted Array (Randomized):", arr2)
     print("Time taken (Randomized): {:.6f} seconds".format(end - start))
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 
-
-
-
-
+EXPLANATION
 
 import random
 import time
@@ -81,7 +78,7 @@ arr[i + 1], arr[high] = arr[high], arr[i + 1]  # Place pivot correctly
 After the loop, swap pivot (arr[high]) with arr[i+1] — pivot goes to its correct sorted position, with all elements left of it ≤ pivot and right of it > pivot.
 return i + 1
 Return the pivot index (i + 1) so the caller can recurse on the two subarrays.
-________________________________________
+
 def deterministic_quick_sort(arr, low, high):
 Define the full deterministic quicksort recursive function.
 if low < high:
@@ -91,7 +88,7 @@ Partition the subarray and get pivot index pi.
 deterministic_quick_sort(arr, low, pi - 1)
 deterministic_quick_sort(arr, pi + 1, high)
 Recursively sort left subarray (low to pi-1) and right subarray (pi+1 to high).
-________________________________________
+                                                                 
 # ------------------ Randomized Quick Sort ------------------
 Comment separating randomized quicksort section.
 def randomized_partition(arr, low, high):
@@ -102,7 +99,7 @@ arr[high], arr[random_pivot] = arr[random_pivot], arr[high]  # Swap with last el
 Swap the randomly chosen pivot element into position high so we can reuse the same partition logic as deterministic_partition.
 return deterministic_partition(arr, low, high) # Partition normally
 Call the deterministic partition (which expects the pivot at high) and return its pivot index.
-________________________________________
+
 def randomized_quick_sort(arr, low, high):
 Define randomized quicksort recursive function.
 if low < high:
@@ -111,7 +108,7 @@ pi = randomized_partition(arr, low, high)
 randomized_quick_sort(arr, low, pi - 1)
 randomized_quick_sort(arr, pi + 1, high)
 Partition using random pivot and recursively sort left and right partitions.
-________________________________________
+
 # ------------------ Main Program ------------------
 Separator comment for the main execution block.
 if __name__ == "__main__":
@@ -125,7 +122,7 @@ arr2 = arr.copy()
 Create two independent copies so both sorts operate on the exact same initial data for fair timing comparison.
 print("\nOriginal Array:", arr)
 Print the generated original array for reference.
-________________________________________
+
 start = time.time()
 deterministic_quick_sort(arr1, 0, len(arr1) - 1)
 end = time.time()
@@ -133,7 +130,7 @@ Record start time, run deterministic quicksort on arr1, then record end time. ti
 print("\nSorted Array (Deterministic):", arr1)
 print("Time taken (Deterministic): {:.6f} seconds".format(end - start))
 Print sorted arr1 and the time difference end - start formatted to 6 decimal places.
-________________________________________
+
 start = time.time()
 randomized_quick_sort(arr2, 0, len(arr2) - 1)
 end = time.time()
@@ -141,7 +138,7 @@ Same timing pattern for randomized quicksort on arr2.
 print("\nSorted Array (Randomized):", arr2)
 print("Time taken (Randomized): {:.6f} seconds".format(end - start))
 Display the result and timing for randomized quicksort.
-________________________________________
+
 Partition invariant: After partitioning, pivot is in final sorted position; left elements ≤ pivot; right elements > pivot.
 In-place algorithm: Quick sort here sorts the array in place — it uses no extra arrays (only recursion stack).
 Stability: Quick sort is not stable — equal elements can change relative order because of swaps.
@@ -155,12 +152,14 @@ Deterministic pivot choice (last element) is simple but can be exploited; random
 Practical note: For very small subarrays, implementations often switch to insertion sort (faster constant factor).
 Seeding randomness: For reproducible timing comparisons you might seed the RNG with random.seed(some_value) before creating arr. 
 But for comparisons between algorithms, identical initial arrays already ensure fairness.
-
+-------------------------------------------------------------------------------------------------------------------------
 Questions
 What is Quick Sort?
-Quick Sort is a divide-and-conquer sorting algorithm that picks a pivot, partitions the array around the pivot, and recursively sorts the left and right parts. It is efficient and works in-place
+Quick Sort is a divide-and-conquer sorting algorithm that picks a pivot, partitions the array around the pivot, and recursively sorts the left and right parts.
+              It is efficient and works in-place
 What is the pivot element
-The pivot is the element used to divide the array into two parts — one with values smaller or equal to the pivot and the other with values greater than the pivot.
+The pivot is the element used to divide the array into two parts — one with values smaller or equal to the pivot and 
+              the other with values greater than the pivot.
 Difference between Deterministic and Randomized Quick Sort?
 Deterministic Quick Sort	Randomized Quick Sort
 Pivot chosen fixed (last element)	Pivot chosen randomly
@@ -168,7 +167,8 @@ Worst-case occurs on sorted/reverse input	Randomization avoids worst-case in mos
 Easier to implement	More robust and secure
 
 Why do we use random pivot selection?
-To avoid worst-case time complexity and make Quick Sort more stable and efficient for all types of input. It prevents adversarial cases.
+To avoid worst-case time complexity and make Quick Sort more stable and efficient for all types of input. 
+              It prevents adversarial cases.
 What is the worst-case time complexity of Quick Sort?
 Worst-case: O(n²)
 Occurs when array is sorted or reverse & pivot chosen badly.
@@ -195,7 +195,7 @@ Which sorting algorithm is faster — Merge Sort or Quick Sort?
 Quick Sort usually performs faster in practice due to in-place sorting & better cache performance, though worst-case is worse.
 Where is Quick Sort used in real life?
 Used in C / C++ standard library (qsort()), Python TimSort uses Quick Sort concepts internally, databases, and system-level sort functions.
-________________________________________
+
 What is the basic idea behind Quicksort?
 Quicksort is a divide-and-conquer sorting algorithm.
 It works by:
@@ -257,5 +257,4 @@ Lower constant factors
 
 Why does Quicksort not need a combine step?
 Subarrays are already sorted after recursive calls.
-________________________________________
 
