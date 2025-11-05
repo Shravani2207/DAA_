@@ -32,7 +32,7 @@ if __name__ == "__main__":
     print("Maximum Value in Knapsack =", max_value)
     print("Fractions of items taken =", fractions_taken)
 
-
+------------------------------------------------------------------------------------
 
 
 
@@ -67,7 +67,7 @@ If yes → add full item (fraction = 1)
 Else → take only the fraction that fits, then stop (bag full)
     return total_value, fractions
 Return max value & fractions list
-________________________________________
+
  Driver Code Output Explanation
 values = [60, 100, 120]
 weights = [10, 20, 30]
@@ -84,7 +84,7 @@ Knapsack capacity = 50
 Final Output:
 Max value = 240
 Fractions taken = [1, 1, 0.6666]
-________________________________________ 
+-------------------------------------------------------------------------
 
 
 
@@ -143,7 +143,7 @@ Whole #1	10	60
 Whole #2	20	100
 ⅔ of #3	20	80
 Total value = 240
-________________________________________
+
 1. What is Greedy Approach?
 Answer:
 A greedy approach is an algorithmic strategy for solving optimization problems by making a sequence of choices, each of which looks the best at the moment.
@@ -196,7 +196,7 @@ The main time complexity arises from sorting items by their value/weight ratio.
 •	Sorting takes: ( O(n \log n) )
 •	Filling the knapsack takes: ( O(n) )
  Total Time Complexity = O(n log n)
-________________________________________
+
 6. Write a Python Program for Fractional Knapsack using Greedy Method.
 Answer:
 class Item:
@@ -227,4 +227,4 @@ if __name__ == "__main__":
     print("Maximum value we can obtain =", fractionalKnapsack(W, arr))
 ✅ Output:
 Maximum value we can obtain = 240.0
-________________________________________
+
